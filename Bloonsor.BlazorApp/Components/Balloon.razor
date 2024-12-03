@@ -1,0 +1,25 @@
+﻿@using Bloonsor.BlazorApp.Model
+@if (Inflatable is not null)
+{
+    <img class="unselectable" @onmouseup="Pop" draggable="false"
+    src="/images/@Inflatable.ImageFileName" 
+    style="position:absolute;top:@(Inflatable.PositionTop)px;left:@(Inflatable.PositionLeft)px;"/>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Inflatable? Inflatable { get; set; }
+
+    [Parameter]
+    public EventCallback<Inflatable> BalloonPopped { get; set; }
+
+    private void Pop()
+    {
+        if (Inflatable is null)
+        {
+            return;
+        }
+
+        BalloonPopped.InvokeAsync(Inflatable);
+    }
+}
